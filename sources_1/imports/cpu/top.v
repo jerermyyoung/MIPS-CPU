@@ -17,10 +17,10 @@ module top(rst,sysclk,selreg,button,selclk,cur_pc,an,cat);
     wire clk,clk1,clk2;
     wire [15:0] regnum;
     
-    innerclk inner(sysclk,clk1);
-    debounce(sysclk,button,clk2);
-    assign clk=(selclk==0)?clk1:(selclk==1)?clk2:0;
-//    assign clk=sysclk;
+//    innerclk inner(sysclk,clk1);
+//    debounce(sysclk,button,clk2);
+//    assign clk=(selclk==0)?clk1:(selclk==1)?clk2:0;
+    assign clk=sysclk;
     
     CPU cpu1(rst,clk,selreg);
 //    CPU cpu1(rst,clk);
