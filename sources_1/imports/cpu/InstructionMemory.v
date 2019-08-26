@@ -3,7 +3,7 @@ module InstructionMemory(Address, Instruction);
 	input [30:0] Address;
 	output [31:0] Instruction;
 	
-	(* rom_style = "block" *) reg [31:0] ROMDATA[22:0];
+	(* rom_style = "distributed" *) reg [31:0] ROMDATA[22:0];
 	
 	initial begin
 	ROMDATA[0] <= 32'h08000003;

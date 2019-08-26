@@ -6,7 +6,7 @@ module RegisterFile(reset, clk, RegWrite, Read_register1, Read_register2, Write_
 	input [31:0] Write_data;
 	output [31:0] Read_data1, Read_data2;
 	
-	(* ram_style = "block" *) reg [31:0] RF_data[31:1];
+	(* ram_style = "distributed" *) reg [31:0] RF_data[31:1];
 	
 	integer i;
 	always @(posedge reset or posedge clk)

@@ -15,7 +15,7 @@ module IF2ID(clk,ins_in,ins_out,pc_in,pc_out,reset,wr_IF2ID,flush_IF2ID);
 	       pc_out<=32'h8000_0000;
 	       ins_out<=32'h0000_0000;
 	   end
-	   else if(flush_IF2ID==1)
+	   else if(flush_IF2ID)
 	   begin
 	       pc_out<=32'h0000_0000;
 	       ins_out<=32'h0000_0000;

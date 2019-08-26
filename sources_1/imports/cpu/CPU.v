@@ -22,7 +22,6 @@ module CPU(reset, clk, select);
     wire [31:0]Imm32,Immzero32,Im_ID,ConBA_ID;
     wire [15:0]Imm16;
     wire [31:0]DataBusA_ID,DataBusB_ID;
-    wire [4:0]RegWraddr_ID;
 
     //EX stage var
     wire [1:0]RegDst_EX,MemtoReg_EX;
@@ -46,20 +45,16 @@ module CPU(reset, clk, select);
 
     //WB stage var == ID stage var
     wire [1:0] MemtoReg_WB;
-    wire [31:0] ALUOut_WB, MemRddata_WB,PC_WB, RegWrdata_WB;
+    wire [31:0] ALUOut_WB, MemRddata_WB,PC_WB,RegWrdata_WB;
     wire [4:0]RegWraddr_WB;
     wire RegWrite_WB;
 
     //flush fucntion var
-    wire flush_IF2ID,Wr_IF2ID,flush_ID2EX;
-    wire Wr_PC;
+    wire flush_IF2ID,Wr_IF2ID,flush_ID2EX,Wr_PC;
 
     //forward function var 
-    wire [31:0]DataBusA_forward_ID,DataBusB_forward_ID;
-    wire [31:0]DataBusA_jr_ID;
-    wire [1:0]ForwardA_EX,ForwardB_EX;
-    wire [1:0]ForwardWD,ForwardJr;
-    wire ForwardA_ID, ForwardB_ID;
+    wire [31:0]DataBusA_forward_ID,DataBusB_forward_ID,DataBusA_jr_ID;
+    wire [1:0]ForwardA_EX,ForwardB_EX,ForwardJr;
     
     wire RegWrite;
     wire [31:0] RegWrdata;
@@ -83,7 +78,6 @@ module CPU(reset, clk, select);
 		.MemRead(MemRead_ID),	.MemWrite(MemWrite_ID), .MemtoReg(MemtoReg_ID),
 		.ALUSrc1(ALUSrc1_ID), .ALUSrc2(ALUSrc2_ID), .ExtOp(ExtOp_ID), .LuOp(LuOp_ID), .ALUOp(ALUOp_ID), .Sign(Sign_ID));
 	
-   assign RegWraddr_ID=(RegDst_ID==2'b00)?ins_IRQ_ID[20:16]:(RegDst_ID==2'b01)?ins_IRQ_ID[15:11]:(RegDst_ID==2'b10)?Ra:Xp;
    assign RegWrite=(ins_IRQ_ID[31:26] == 6'h03)?RegWrite_ID:RegWrite_WB;
    assign RegWraddr=(ins_IRQ_ID[31:26] == 6'h03)?5'b11111:RegWraddr_WB;
    assign RegWrdata=(ins_IRQ_ID[31:26] == 6'h03)?PC_IF:RegWrdata_WB;
@@ -142,15 +136,13 @@ module CPU(reset, clk, select);
         
     //forward
     Forward fo(
-        RegWrite_EX,RegWrite_MEM,RegWraddr_EX,RegWraddr_MEM,ALUSrc1_EX,ALUSrc2_EX,
-        ins_IRQ_ID[25:21],ins_IRQ_ID[20:16],ForwardA_EX,ForwardB_EX,ForwardJr,
-        ForwardWD);
+        RegWrite_EX,RegWrite_MEM,RegWraddr_EX,RegWraddr_MEM,ALUSrc1_ID,ALUSrc2_ID,
+        ins_IRQ_ID[25:21],ins_IRQ_ID[20:16],ForwardA_EX,ForwardB_EX,ForwardJr);
     
     //hazard
     Hazard ha(
         Branch_ID,PCSrc,ins_IRQ_ID[25:21],ins_IRQ_ID[20:16],ins_EX[20:16],MemRead_EX,
-        flush_IF2ID,flush_ID2EX,Wr_IF2ID,Wr_PC
-    );
+        flush_IF2ID,flush_ID2EX,Wr_IF2ID,Wr_PC);
 	
 	//PC related
     assign PC_next= (PCSrc==3'b000) ? PC_plus_4:
