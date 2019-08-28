@@ -16,7 +16,7 @@ begin
 if(state==0)
 clk=~clk;
 state=state+1;
-if(state==27'd49_999999)
+if(state==27'd49_9999)
 state=27'b0;
 end
 

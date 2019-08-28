@@ -2,7 +2,7 @@
 module ID2EX(reset,clk,flush_ID2EX,
 	ALUSrc1_in,ALUSrc1_out,ALUSrc2_in,ALUSrc2_out,Sign_in,Sign_out,ALUFun_in,ALUFun_out,MemRd_in,MemRd_out,MemWr_in,MemWr_out,MemtoReg_in,MemtoReg_out,
 	DatabusA_in,DatabusA_out,DatabusB_in,DatabusB_out,pc_in,pc_out,Im_in,Im_out,ins_in,ins_out,ConBA_in,ConBA_out,
-	RegDst_in,RegDst_out,RegWr_in,RegWr_out,PCSrc_in,PCSrc_out);
+	RegDst_in,RegDst_out,RegWr_in,RegWr_out,PCSrc_in,PCSrc_out,addr_in,addr_out);
 input reset,clk,flush_ID2EX;
 input ALUSrc1_in;
 input ALUSrc2_in;
@@ -15,6 +15,7 @@ input [31:0]DatabusA_in,DatabusB_in,pc_in,Im_in,ins_in,ConBA_in;
 input [1:0]RegDst_in;
 input RegWr_in;
 input [2:0] PCSrc_in;
+input [1:0] addr_in;
 
 output ALUSrc1_out;
 output ALUSrc2_out;
@@ -27,6 +28,7 @@ output [31:0]DatabusA_out,DatabusB_out,pc_out,Im_out,ins_out,ConBA_out;
 output [1:0]RegDst_out;
 output RegWr_out;
 output [2:0] PCSrc_out;
+output [1:0] addr_out;
 
 reg ALUSrc1_out;
 reg ALUSrc2_out;
@@ -39,6 +41,7 @@ reg [31:0]DatabusA_out,DatabusB_out,pc_out,Im_out,ins_out,ConBA_out;
 reg [1:0]RegDst_out;
 reg RegWr_out;
 reg [2:0] PCSrc_out;
+reg [1:0] addr_out;
 
 always @(posedge clk or posedge reset)
 begin
@@ -60,6 +63,7 @@ begin
 		RegWr_out<=0;
 		pc_out<=32'h8000_0000;
 		PCSrc_out<=0;
+		addr_out<=0;
 	end
 	else if(flush_ID2EX)
 	begin
@@ -79,6 +83,7 @@ begin
         RegWr_out<=0;
         pc_out<=32'h0000_0000;
         PCSrc_out<=0;
+        addr_out<=0;
     end
 	else
 	begin
@@ -98,6 +103,7 @@ begin
 		RegDst_out<=RegDst_in;
 		RegWr_out<=RegWr_in;
 		PCSrc_out<=PCSrc_in;
+		addr_out<=addr_in;
 	end
 end
 endmodule
