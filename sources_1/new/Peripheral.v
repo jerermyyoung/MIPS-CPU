@@ -28,7 +28,6 @@ assign rdata = (rd == 0)? 32'b0 :
 			   (addr == 32'h40000014)? systick:
 			   (addr == 32'h40000018)? {25'b0,selreg}:32'h0000_0000;
 
-
 always@(posedge reset or posedge clk) 
 begin
 	if(reset) 
@@ -55,8 +54,8 @@ begin
 			32'h40000000: TH <= wdata;
 			32'h40000004: TL <= wdata;
 			32'h40000008: TCON <= wdata[2:0];
-			//32'h4000000c: led <= wdata[7:0];
-			//32'h40000010: digi <= wdata[11:0];
+			32'h4000000c: led <= wdata[7:0];
+			32'h40000010: digi <= wdata[11:0];
 			default:;
 		endcase
 		end
@@ -65,4 +64,3 @@ begin
 end
 
 endmodule
-

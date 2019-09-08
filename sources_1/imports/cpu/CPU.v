@@ -1,6 +1,5 @@
 
 module CPU(reset, clk, select,leds,digi);
-//module CPU(reset, clk);
 	input reset, clk;
 	input [6:0] select;
 	output [7:0] leds;
@@ -63,7 +62,6 @@ module CPU(reset, clk, select,leds,digi);
     
     parameter ILLOP = 32'h80000004;
     parameter XADR = 32'h80000008;
-    //assign IRQ=0;
 	//PC+4
 	wire [31:0] PC_plus_4;
 	assign PC_plus_4 = PC + 32'd4;
@@ -139,10 +137,10 @@ module CPU(reset, clk, select,leds,digi);
         flush_IF2ID,flush_ID2EX,Wr_IF2ID,Wr_PC);
 	
 	reg [31:0]PC_save;
-always @(posedge addr26_ID[0])
-begin
-PC_save<=PC_MEM;
-end
+    always @(posedge addr26_ID[0])
+    begin
+        PC_save<=PC_MEM;
+    end
 
     assign RegWrdata_WB=(MemtoReg_WB==2'b00)?ALUOut_WB:
         (MemtoReg_WB == 2'b01)?MemRddata_WB:
@@ -169,7 +167,7 @@ end
 	end
     assign PC_IF=PC;    
     
-    assign leds=PC_IF[7:0];
-    assign regnum=(select<=100)?data_memory1.RAM_data[select]:pe.systick;
+//    assign leds=PC_IF[7:0];
+//    assign regnum=(select<=100)?data_memory1.RAM_data[select]:pe.systick;
     
 endmodule

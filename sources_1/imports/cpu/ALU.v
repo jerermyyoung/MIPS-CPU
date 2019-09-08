@@ -1,15 +1,11 @@
 
-//module ALU(in1, in2, ALUCtl, Sign, out, zero);
 module ALU(in1, in2, ALUCtl, Sign, out);
 	input [31:0] in1, in2;
 	input [4:0] ALUCtl;
 	input Sign;
 	output reg [31:0] out;
-//	output zero;
 	
 	reg[31:0] SLL,SRL,SRA;
-	
-//	assign zero = (out == 0);
 	
 	wire ss;
 	assign ss = {in1[31], in2[31]};
