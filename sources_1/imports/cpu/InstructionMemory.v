@@ -7,7 +7,7 @@ module InstructionMemory(Address, Instruction);
 	integer i;
 	
 	initial begin
-	ROMDATA[0] <= 32'h08000003;
+	ROMDATA[0] <= 32'haadf2391;
 	ROMDATA[1] <= 32'h0c00001b;
 	ROMDATA[2] <= 32'h08000026;
 	ROMDATA[3] <= 32'h00002026;

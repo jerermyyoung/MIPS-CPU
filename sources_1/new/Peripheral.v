@@ -14,16 +14,8 @@ output irqout;
 reg [7:0] led;
 reg [11:0] digi;
 reg [2:0] TCON;
-
-
 reg [31:0] TH,TL;
 reg [31:0] systick;
-
-
-
-
-
-
 
 assign irqout = (PC_31 || PCSrc==3'b001 || PCSrc==3'b010 || PCSrc==3'b011)?0:TCON[2];
 
@@ -50,7 +42,7 @@ begin
 	begin
 		if(TCON[0]) 
 		begin
-			if(TL==49) 
+			if(TL==32'h499_999) 
 			begin
 				TL <= TH;
 				if(TCON[1]) TCON[2] <= 1'b1;
@@ -63,9 +55,8 @@ begin
 			32'h40000000: TH <= wdata;
 			32'h40000004: TL <= wdata;
 			32'h40000008: TCON <= wdata[2:0];
-			32'h4000000c: led <= wdata[7:0];
+			//32'h4000000c: led <= wdata[7:0];
 			//32'h40000010: digi <= wdata[11:0];
-
 			default:;
 		endcase
 		end

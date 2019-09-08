@@ -169,7 +169,7 @@ end
 	end
     assign PC_IF=PC;    
     
-    //assign leds=PC_IF[7:0];
+    assign leds=PC_IF[7:0];
     assign regnum=(select<=100)?data_memory1.RAM_data[select]:pe.systick;
     
 endmodule
